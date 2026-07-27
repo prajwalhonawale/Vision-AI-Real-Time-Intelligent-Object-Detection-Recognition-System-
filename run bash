@@ -1,0 +1,7 @@
+# terminal 1 (leave running)
+~/llama.cpp/build/bin/llama-server -m ~/models/moondream2/moondream2-text-model-f16_q4_0.gguf \
+  --mmproj ~/models/moondream2/moondream2-mmproj-f16.gguf --port 8080 -t 2
+
+# terminal 2
+source ~/vision-env/bin/activate
+python3 app.py
