@@ -1,0 +1,2 @@
+# Vision-AI-Real-Time-Intelligent-Object-Detection-Recognition-System-
+Vision AI is a real-time object detection and recognition system built with Python, OpenCV, and YOLO. It detects and classifies multiple objects from live video with high accuracy, displaying bounding boxes and confidence scores. Designed for surveillance, robotics, automation, and Edge AI applications with a scalable, modular architecture.
