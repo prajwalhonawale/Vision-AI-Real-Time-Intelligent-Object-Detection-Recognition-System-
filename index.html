@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>VisionAI</title>
+<style>
+body { font-family: sans-serif; background:#111; color:#eee; text-align:center; }
+img { max-width: 90vw; border: 2px solid #333; border-radius: 8px; }
+button { padding: 10px 24px; font-size: 16px; margin-top: 12px; cursor: pointer;
+         border-radius: 6px; border: none; background:#ff9800; color:#111; font-weight:bold; }
+button:disabled { background:#555; color:#aaa; }
+#result { margin-top: 16px; font-size: 18px; min-height: 60px; }
+#name { font-size: 22px; font-weight: bold; color:#ff9800; }
+</style>
+</head>
+<body>
+<h2>VisionAI — Live Object Detection</h2>
+<img src="/video_feed">
+<br>
+<button id="btn" onclick="describeObject()">Describe Centered Object</button>
+<div id="result"></div>
+<script>
+async function describeObject() {
+  const btn = document.getElementById("btn");
+  const result = document.getElementById("result");
+  btn.disabled = true;
+  result.innerHTML = "Analyzing... (can take up to a minute on Pi 4B)";
+  try {
+    const res = await fetch("/describe", { method: "POST" });
+    const data = await res.json();
+    result.innerHTML = data.error
+      ? "⚠️ " + data.error
+      : `<div id="name">${data.name}</div><div>${data.description}</div>
+         <div style="color:#888;font-size:14px;">
+           ${data.yolo_class ? "YOLO: " + data.yolo_class + " (" + data.yolo_conf + "%) · " : ""}
+           analyzed in ${data.latency}s</div>`;
+  } catch (e) {
+    result.innerHTML = "⚠️ Request failed: " + e;
+  }
+  btn.disabled = false;
+}
+</script>
+</body>
+</html>
